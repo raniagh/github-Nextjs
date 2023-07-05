@@ -2,7 +2,12 @@ import Link from "next/link";
 import { FaCodeBranch, FaEye, FaStar } from "react-icons/fa";
 
 async function fetchRepos() {
-  const response = await fetch("https://api.github.com/users/raniagh/repos");
+  //fetch data every 60s : it's helpful for data that changes often
+  const response = await fetch("https://api.github.com/users/raniagh/repos", {
+    next: {
+      revalidate: 60,
+    },
+  });
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
   const repos = await response.json();
   return repos;
